@@ -1,0 +1,13 @@
+import { Request,Response } from "express"
+import { getAllBooks } from "../models/bookStore.model";
+
+export const getAllBooksContoller = (req:Request,res:Response)=>{
+const query = req.query;
+
+const bookStore = getAllBooks({auther:query.auther as string, genre:query.genre as string});
+
+res.json({
+  message:"data fetched",
+  data:bookStore
+});
+};
