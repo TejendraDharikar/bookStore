@@ -22,60 +22,46 @@ const addBook=await prisma.books.create({
 })
 return addBook;
 };
-// export function updateBooks(bookId:number,body:Book){
-//   const book = getBookById(bookId);
-//   if(!book.data){
-//     throw new Error("book not found");
-//   };
-//   const updatedBook = bookStore.map((book)=>{
-//     if(book.id===bookId){
-//       return{
-//         ...book,
-//         ...body
-//       }
-//     }else{
-//         return book;
-//       }
-//   });
-//   bookStore=updatedBook;
-//   return updatedBook[book.indx];
-// };
+export async function updateBooks(bookId:number,body:Book){
+  const book =await prisma.books.update({
+    where:{
+      book_id:bookId
+    },
+    data:body
+})
+ 
+  return book;
+};
 
-// export function deleteBooks(bookId:number){
+export async function deleteBooks(bookId:number){
 
-// const book=getBookById(bookId);
+const book=await prisma.books.delete({
+  where:{
+    book_id:bookId
+  }
+})
+return book;
 
-// const foundedBook=bookStore.find(book=>book.id===bookId);
+};
 
-// if(book.indx===-1){
-// throw new Error(`id ${bookId} not found`);
-// };
-// const deletedBookStore = bookStore.filter( book => book.id!==bookId );
+export async function getAllBooks(query:{author?:string,genre?:string}){
+  const book = await prisma.books.findMany({
+    where: {
+      AND: [
+        query.author ? { author: query.author } : {}, 
+        query.genre ? { genre: query.genre } : {}
+      ]
+    }
+  })
+  return book;
+}
 
-// bookStore=deletedBookStore;
+export async function getBookById(bookId:number){
+const book =await prisma.books.findUnique({
+  where:{
+    book_id:bookId
+  }
+})
 
-// return foundedBook;
-
-// };
-
-// export function getAllBooks(query:{auther?:string,genre?:string}){
-// if(!query.auther && !query.genre){
-//   return bookStore;
-// };
-
-// const filteredBook = bookStore.filter(book=>
-// book.auther===query.auther && book.genre===query.genre);
-// return filteredBook;
-// };
-// export function getBookById(bookId:number){
-// const bookIndx= bookStore.findIndex(book=>book.id===bookId
-//   );
-//   if(bookIndx===-1){
-//     throw new Error("book not found");
-//     };
-
-//     return{
-//       indx:bookIndx,
-//       data:bookStore[bookIndx]
-//     };
-// };
+    return book;
+};

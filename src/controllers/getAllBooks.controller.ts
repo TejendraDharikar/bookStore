@@ -1,10 +1,10 @@
 import { Request,Response } from "express"
 import { getAllBooks } from "../prisma-models/bookStore.model";
 
-export const getAllBooksContoller = (req:Request,res:Response)=>{
+export const getAllBooksContoller = async(req:Request,res:Response)=>{
 const query = req.query;
 
-const bookStore = getAllBooks({auther:query.auther as string, genre:query.genre as string});
+const bookStore =await getAllBooks({auther:query.auther as string, genre:query.genre as string});
 
 res.json({
   message:"data fetched",

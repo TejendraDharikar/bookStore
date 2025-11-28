@@ -1,12 +1,12 @@
 import { Request,Response } from "express"
 import { getBookById } from "../prisma-models/bookStore.model";
 
-export const getBookByIdController=(req:Request,res:Response)=>{
+export const getBookByIdController=async(req:Request,res:Response)=>{
 try {
   const params=req.params;
 const bookId= parseInt(params.bookId as string);
 
-const Book=getBookById(bookId);
+const Book=await getBookById(bookId);
 
 res.json({
   message:`sucessfully fetched data from id ${bookId}`,
