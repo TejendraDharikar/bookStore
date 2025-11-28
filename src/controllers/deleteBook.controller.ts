@@ -1,5 +1,5 @@
 import { Request , Response } from "express";
-import { deleteBooks } from "../models/bookStore.model";
+import { deleteBooks } from "../prisma-models/bookStore.model";
 export const deletedBookController=(req:Request,res:Response)=>{
 const params = req.params;
 const bookId = parseInt(params.bookId as string);

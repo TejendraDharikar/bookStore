@@ -1,5 +1,5 @@
 import { Request,Response } from "express"
-import { getAllBooks } from "../models/bookStore.model";
+import { getAllBooks } from "../prisma-models/bookStore.model";
 
 export const getAllBooksContoller = (req:Request,res:Response)=>{
 const query = req.query;

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { updateBooks } from "../models/bookStore.model";
+import { updateBooks } from "../prisma-models/bookStore.model";
 
 export const updatedBookController=(req:Request,res:Response)=>{
 const body=req.body;

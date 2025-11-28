@@ -1,5 +1,5 @@
 import { Request,Response } from "express"
-import { getBookById } from "../models/bookStore.model";
+import { getBookById } from "../prisma-models/bookStore.model";
 
 export const getBookByIdController=(req:Request,res:Response)=>{
 try {
