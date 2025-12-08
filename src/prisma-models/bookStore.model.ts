@@ -22,22 +22,26 @@ const addBook=await prisma.books.create({
 })
 return addBook;
 };
-export async function updateBooks(bookId:number,body:Book){
+export async function updateBooks(id:number,data:Book){
+
+   await getBookById(id);  
   const book =await prisma.books.update({
     where:{
-      book_id:bookId
+      book_id:id
     },
-    data:body
+    data:data
 })
  
   return book;
 };
 
-export async function deleteBooks(bookId:number){
+export async function deleteBooks(id:number){
+
+  await getBookById(id);  
 
 const book=await prisma.books.delete({
   where:{
-    book_id:bookId
+    book_id:id
   }
 })
 return book;
@@ -61,7 +65,10 @@ const book =await prisma.books.findUnique({
   where:{
     book_id:bookId
   }
-})
+});
+if(!book){
+  throw new Error(`Book with id ${bookId} not found`);
+}
 
     return book;
 };
