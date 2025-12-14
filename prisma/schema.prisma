@@ -24,4 +24,15 @@ model books {
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
   user_id      Int
+  user         users     @relation(fields: [user_id], references: [id])
+}
+
+model users {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  books      books[]
 }

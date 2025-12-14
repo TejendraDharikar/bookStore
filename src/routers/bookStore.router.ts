@@ -1,9 +1,10 @@
 import { Application } from "express";
-import { getAllBooksContoller } from "../controllers/getAllBooks.controller";
-import { getBookByIdController } from "../controllers/getBooksById.controller";
-import { addBookController } from "../controllers/addBook.controller";
-import { updatedBookController } from "../controllers/updateBook.controller";
-import { deletedBookController } from "../controllers/deleteBook.controller";
+import { addBookController } from "../controllers/books/addBook.controller";
+import { getAllBooksContoller } from "../controllers/books/getAllBooks.controller";
+import { getBookByIdController } from "../controllers/books/getBooksById.controller";
+import { deletedBookController } from "../controllers/books/deleteBook.controller";
+import { updatedBookController } from "../controllers/books/updateBook.controller";
+
 
 export function bookRouters(app:Application){
   app.post('/books',addBookController);

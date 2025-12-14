@@ -1,6 +1,6 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/controllers/books"],
   "compilerOptions": {
     // File Layout
     "rootDir": "./src",

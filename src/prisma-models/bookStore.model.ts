@@ -1,16 +1,19 @@
-import { Prisma } from "../generated/prisma";
+import { TAddBookSchema } from "../controllers/books/addBook.controller";
+import { TBookQuerySchema } from "../controllers/books/getAllBooks.controller";
+import { TUpdateBookSchema } from "../controllers/books/updateBook.controller";
 import { prisma } from "../lib/prisma";
 
 
-export interface Book{
-  id:number;
-  name:string;
-  auther:string;
-  genre:string;
+export async function addBook(data:TAddBookSchema){
+const foundData= await prisma.books.findFirst({
+  where:{
+    title:data.title,
+  }
+});
+if(foundData){
+throw new Error(`title with ${data.title} already exists`);
 };
 
-
-export async function addBook(data:Prisma.booksCreateInput){
 const addBook=await prisma.books.create({
   data:{
     title:data.title,
@@ -22,14 +25,22 @@ const addBook=await prisma.books.create({
 })
 return addBook;
 };
-export async function updateBooks(id:number,data:Book){
 
-   await getBookById(id);  
+export async function updateBooks(id:number,data:TUpdateBookSchema){
+
+ const foundData=  await getBookById(id);  
+
   const book =await prisma.books.update({
     where:{
       book_id:id
     },
-    data:data
+    data:{
+      title:data.title||foundData.title,
+    description:data.description||foundData.description,
+    author:data.author||foundData.author,
+    genre:data.genre||foundData.genre,
+    price:data.price||foundData.price,
+    }
 })
  
   return book;
@@ -48,7 +59,7 @@ return book;
 
 };
 
-export async function getAllBooks(query:{author?:string,genre?:string}){
+export async function getAllBooks(query:TBookQuerySchema ){
   const book = await prisma.books.findMany({
     where: {
       AND: [
@@ -60,15 +71,15 @@ export async function getAllBooks(query:{author?:string,genre?:string}){
   return book;
 }
 
-export async function getBookById(bookId:number){
+export async function getBookById(id:number){
 const book =await prisma.books.findUnique({
   where:{
-    book_id:bookId
+    book_id:id
   }
 });
-if(!book){
-  throw new Error(`Book with id ${bookId} not found`);
-}
 
+if(!book){
+  throw new Error(`Book with id ${id} not found`);
+};
     return book;
 };

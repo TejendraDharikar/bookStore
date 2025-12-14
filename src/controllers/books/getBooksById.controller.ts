@@ -1,10 +1,11 @@
 import { Request,Response } from "express"
-import { getBookById } from "../prisma-models/bookStore.model";
+import { getBookById } from "../../prisma-models/bookStore.model";
+
 
 export const getBookByIdController=async(req:Request,res:Response)=>{
 try {
   const params=req.params;
-const bookId= parseInt(params.bookId as string);
+const bookId= Number(params.bookId);
 
 const Book=await getBookById(bookId);
 
